@@ -16,6 +16,6 @@ RETURN_CODE=$?
 SUCCESSFUL=$(echo $RESPONSE | perl -ne 'print $1 if /"successful":(\w+),/')
 TRANSLATED_TEXT=$(echo $RESPONSE | perl -ne 'print $1 if /"translated_text":"(\w+)"/')
 
-[[ $SUCCESSFUL != 'true' ]] && echo "error. SUCCESSFUL=$SUCCESSFUL" && exit 1
+[[ $SUCCESSFUL != 'true' ]] && echo "error. response= $RESPONSE" 1>&2 && exit 1
 echo $TRANSLATED_TEXT
 exit 0
