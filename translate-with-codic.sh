@@ -1,9 +1,9 @@
 #!/bin/bash
 # usage: translate_with_codic.bash 英訳したい日本語
 
-readonly ACCESS_TOKEN=''
-readonly TEXT=$1
-[[ -z $TEXT ]] && exit 1
+readonly ACCESS_TOKEN=$(head -1 'access_token')
+TEXT=$1
+[[ -z $TEXT ]] && read TEXT && [[ -z $TEXT ]] && exit 1
 
 RESPONSE=$(curl --silent \
      -H 'Host: api.codic.jp' \
