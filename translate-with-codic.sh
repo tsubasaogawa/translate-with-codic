@@ -14,7 +14,7 @@ RETURN_CODE=$?
 
 # API の成功可否と翻訳結果だけ得られればよい
 SUCCESSFUL=$(echo $RESPONSE | perl -ne 'print $1 if /"successful":(\w+),/')
-TRANSLATED_TEXT=$(echo $RESPONSE | perl -ne 'print $1 if /"translated_text":"(\w+)"/')
+TRANSLATED_TEXT=$(echo $RESPONSE | perl -ne 'print "$1 " while /"translated_text":"(\w+)"/g')
 
 [[ $SUCCESSFUL != 'true' ]] && echo "error. response= $RESPONSE" 1>&2 && exit 1
 echo $TRANSLATED_TEXT
