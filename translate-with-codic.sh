@@ -17,12 +17,14 @@ RETURN_CODE=$?
 [[ $RETURN_CODE -ne 0 ]] && exit $RETURN_CODE
 
 # API の成功可否と翻訳結果だけ得られればよいので、抜き出す
-SUCCESSFUL=$(echo $RESPONSE | perl -ne 'print $1 if /"successful":(\w+),/')
-TRANSLATED_TEXT=$(echo $RESPONSE | perl -ne 'print "$1 " while /"translated_text":"(\w+)"/g')
+# \u1234 のようなコードポイントは \x{1234} の形に整形する
+TRANSLATED_TEXT=$(echo $RESPONSE \
+  | perl -ne 'print "$1 " if /"translated_text":"([^"]+)"/' \
+  | perl -pe 's/\\u([0-9a-f]+)/\\x\{$1\}/g')
 
 # 失敗したぽいならレスポンスを全文出力して逃げる
-[[ $SUCCESSFUL != 'true' ]] && echo "error. response= $RESPONSE" 1>&2 && exit 1
+[[ $TRANSLATED_TEXT == '' ]] && echo "error. response= $RESPONSE" 1>&2 && exit 1
 
-# 出力
-echo $TRANSLATED_TEXT
+# 出力する
+perl -CS -E "say \"$TRANSLATED_TEXT\""
 exit 0
