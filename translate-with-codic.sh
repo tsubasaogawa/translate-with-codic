@@ -3,7 +3,7 @@
 #  * ./translate_with_codic.sh 英訳したい日本語
 #  * 標準入力からでも OK
 
-readonly ACCESS_TOKEN=$(head -1 './access_token')
+readonly ACCESS_TOKEN=$(head -1 "$(dirname $0)/access_token")
 TEXT=$1
 # 引数が空なら標準入力からの取得を試みる
 [[ -z $TEXT ]] && read TEXT && [[ -z $TEXT ]] && exit 1
