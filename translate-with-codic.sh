@@ -31,6 +31,10 @@ TRANSLATED_TEXT=$(echo $RESPONSE \
 # 末尾の区切り文字を削除
 TRANSLATED_TEXT="${TRANSLATED_TEXT%${SEPARATOR}}"
 
+# 戻り値取得
+echo $RESPONSE | grep -qe '^\[{"successful":true'
+SUCCESSFUL=$?
+
 # 出力する
 perl -CS -E "say \"$TRANSLATED_TEXT\""
-exit 0
+exit $SUCCESSFUL
