@@ -2,7 +2,7 @@
 
 ## Overview
 
-* Codic, which translates from Japanese to programming-optimized English, in your Bash client
+* [Codic](https://codic.jp/), which translates from Japanese to programming-optimized English, in your Bash client
 
 ## setup
 
